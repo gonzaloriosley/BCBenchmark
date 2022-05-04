@@ -1,4 +1,4 @@
-page 89320 "BC Benchmark"
+page 89320 "BC Benchmark002SKC"
 {
     PageType = NavigatePage;
     SourceTable = "Score Hgd";
@@ -59,12 +59,12 @@ page 89320 "BC Benchmark"
                     Window: Dialog;
                     SessionId: Integer;
                 begin
-                    Codeunit.Run(CODEUNIT::"Benchmark Runner Hgd");
+                    Codeunit.Run(CODEUNIT::"Benchmark Runner Hgd002SKC");
                     //Session.StartSession(SessionId, CODEUNIT::"Benchmark Runner Hgd", CompanyName, Parameters);
                 end
                 ;
             }
-            action(Run)
+            action("Run")
             {
                 Caption = 'Run Benchmark';
                 ApplicationArea = all;
@@ -75,7 +75,7 @@ page 89320 "BC Benchmark"
                     Window: Dialog;
                     SessionId: Integer;
                 begin
-                    Session.StartSession(SessionId, CODEUNIT::"Benchmark Runner Hgd");
+                    Session.StartSession(SessionId, CODEUNIT::"Benchmark Runner Hgd002SKC");
                 end
                 ;
             }
@@ -105,7 +105,7 @@ page 89320 "BC Benchmark"
             Score.Get('Total', Total);
             Score.Get('Tests', Tests);
             Rec.DeleteAll();
-            foreach K in Tests.AsObject().Keys() do begin
+            foreach K in Tests.AsObject().Keys() do
                 if Tests.AsObject().Get(K, Test) then begin
                     Test.AsObject().Get('Codeunit', CU);
                     Test.AsObject().Get('Score', CUScore);
@@ -114,18 +114,11 @@ page 89320 "BC Benchmark"
                     Rec.Score := CUScore.AsValue().AsInteger();
                     Rec.Insert();
                 end;
-            end;
             Status := '<h2 style="font-family: "Segoe UI Semibold", "Segoe WP Semibold", device-segoe-semibold, "Segoe UI", "Segoe WP", Segoe, Tahoma, Helvetica, Arial, sans-serif !important;font-weight: normal !important;font-style: normal !important;text-transform: none !important;">Score ' + format(Total.AsValue().AsInteger()) + '</h2>'
         end else begin
             Status := '<h2 style="font-family: "Segoe UI Semibold", "Segoe WP Semibold", device-segoe-semibold, "Segoe UI", "Segoe WP", Segoe, Tahoma, Helvetica, Arial, sans-serif !important;font-weight: normal !important;font-style: normal !important;text-transform: none !important;">Benchmark is running ...</h2>';
             Rec.DeleteAll();
         end;
-
-        CurrPage.Logo.Render(
-        '<div>' +
-        '<img style="display: block;margin-left: 0px;margin-right: auto; width: 100%;" src="' + LogoURL + '">' +
-        Status +
-        '</div>');
 
     end;
 
